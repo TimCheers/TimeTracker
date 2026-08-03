@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Domain", "TimeTracker.Domain\TimeTracker.Domain.csproj", "{DD17054E-7CBA-4B30-A4D1-C4100FB3B1BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Data", "TimeTracker.Data\TimeTracker.Data.csproj", "{312D830B-FB66-48E3-97CD-8A11FCCF46E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.Core", "TimeTracker.Core\TimeTracker.Core.csproj", "{662093A5-3198-4781-964E-FC0B94E1615C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTracker.UI", "TimeTracker.UI\TimeTracker.UI.csproj", "{4A3C2FB1-2F58-4E08-A0BC-44FDF87B874D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DD17054E-7CBA-4B30-A4D1-C4100FB3B1BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD17054E-7CBA-4B30-A4D1-C4100FB3B1BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD17054E-7CBA-4B30-A4D1-C4100FB3B1BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD17054E-7CBA-4B30-A4D1-C4100FB3B1BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{312D830B-FB66-48E3-97CD-8A11FCCF46E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{312D830B-FB66-48E3-97CD-8A11FCCF46E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{312D830B-FB66-48E3-97CD-8A11FCCF46E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{312D830B-FB66-48E3-97CD-8A11FCCF46E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{662093A5-3198-4781-964E-FC0B94E1615C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662093A5-3198-4781-964E-FC0B94E1615C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662093A5-3198-4781-964E-FC0B94E1615C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662093A5-3198-4781-964E-FC0B94E1615C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A3C2FB1-2F58-4E08-A0BC-44FDF87B874D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A3C2FB1-2F58-4E08-A0BC-44FDF87B874D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A3C2FB1-2F58-4E08-A0BC-44FDF87B874D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A3C2FB1-2F58-4E08-A0BC-44FDF87B874D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
