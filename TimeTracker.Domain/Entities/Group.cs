@@ -6,5 +6,5 @@ public class Group
     public string Title { get; set; } = string.Empty;
     public string Color { get; set; } = string.Empty;
 
-    public ICollection<TasksInGroup> TaskInGroups { get; set; } = new List<TasksInGroup>();
+    public ICollection<TasksInGroup> TasksInGroups { get; set; } = new List<TasksInGroup>();
 }
