@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+TimeTracker.UI/appsettings.json
+
+
 # dotenv files
 .env
 
