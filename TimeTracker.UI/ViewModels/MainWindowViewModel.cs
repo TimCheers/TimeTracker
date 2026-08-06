@@ -14,6 +14,8 @@ public class MainWindowViewModel : INotifyPropertyChanged
     public ObservableCollection<ScheduleTemplate> Schedules { get; set; } = new();
     private string _newScheduleTitle = string.Empty;
     public ICommand AddScheduleCommand { get; }
+    private readonly Func<ScheduleTemplate, ScheduleEditorViewModel> _editorFactory;
+    public ICommand OpenEditorCommand { get; }
 
     public string NewScheduleTitle
     {
@@ -22,12 +24,31 @@ public class MainWindowViewModel : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
-
-    public MainWindowViewModel(AppDbContext context)
+    
+    public MainWindowViewModel(AppDbContext context, Func<ScheduleTemplate, ScheduleEditorViewModel> editorFactory)
     {
         _context = context;
+        _editorFactory = editorFactory;
         Schedules = new ObservableCollection<ScheduleTemplate>(_context.ScheduleTemplates.ToList());
         AddScheduleCommand = new RelayCommand(AddSchedule);
+        OpenEditorCommand = new RelayCommand<ScheduleTemplate>(OpenEditor);
+    }
+    private void AddSchedule()
+    {
+        ScheduleTemplate newTemplate =  new ScheduleTemplate();
+        newTemplate.Title = NewScheduleTitle;
+        _context.ScheduleTemplates.Add(newTemplate);
+        _context.SaveChanges();
+        Schedules.Add(newTemplate);
+        NewScheduleTitle = string.Empty;
+    }
+    private void OpenEditor(ScheduleTemplate? schedule)
+    {
+        if (schedule is null) return;
+
+        var editorViewModel = _editorFactory(schedule);
+        var editorWindow = new ScheduleEditorWindow { DataContext = editorViewModel };
+        editorWindow.ShowDialog();
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
@@ -41,15 +62,5 @@ public class MainWindowViewModel : INotifyPropertyChanged
         field = value;
         OnPropertyChanged(propertyName);
         return true;
-    }
-
-    private void AddSchedule()
-    {
-        ScheduleTemplate newTemplate =  new ScheduleTemplate();
-        newTemplate.Title = NewScheduleTitle;
-        _context.ScheduleTemplates.Add(newTemplate);
-        _context.SaveChanges();
-        Schedules.Add(newTemplate);
-        NewScheduleTitle = string.Empty;
     }
 }

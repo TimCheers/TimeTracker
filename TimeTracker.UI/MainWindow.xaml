@@ -7,12 +7,21 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
             <TextBox Width="200" Text="{Binding NewScheduleTitle, UpdateSourceTrigger=PropertyChanged}" />
             <Button Content="Add Schedule" Command="{Binding AddScheduleCommand}" Margin="10,0,0,0" />
         </StackPanel>
-
-        <ListBox Grid.Row="1" ItemsSource="{Binding Schedules}" DisplayMemberPath="Title" />
+        <ListBox Grid.Row="1" ItemsSource="{Binding Schedules}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" Width="200" VerticalAlignment="Center" />
+                        <Button Content="Edit"
+                                Command="{Binding DataContext.OpenEditorCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

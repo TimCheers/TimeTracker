@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TimeTracker.Data;
+using TimeTracker.Domain.Entities;
 using TimeTracker.UI.ViewModels;
 
 namespace TimeTracker.UI;
@@ -27,7 +28,11 @@ public partial class App : Application
         services.AddDbContext<AppDbContext>(options =>
             options.UseNpgsql(connectionString)
                 .UseSnakeCaseNamingConvention());
+        
         services.AddTransient<MainWindowViewModel>();
+        
+        services.AddTransient<Func<ScheduleTemplate, ScheduleEditorViewModel>>(sp =>
+            schedule => new ScheduleEditorViewModel(sp.GetRequiredService<AppDbContext>(), schedule));
 
         Services = services.BuildServiceProvider();
     }
