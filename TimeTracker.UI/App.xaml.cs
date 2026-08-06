@@ -29,6 +29,9 @@ public partial class App : Application
             options.UseNpgsql(connectionString)
                 .UseSnakeCaseNamingConvention());
         
+        services.AddTransient<TimelinePrototypeWindow>();
+        
+        
         services.AddTransient<MainWindowViewModel>();
         
         services.AddTransient<Func<ScheduleTemplate, ScheduleEditorViewModel>>(sp =>
