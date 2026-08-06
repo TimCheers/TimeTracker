@@ -6,7 +6,29 @@
         xmlns:local="clr-namespace:TimeTracker.UI"
         mc:Ignorable="d"
         Title="ScheduleEditorWindow" Height="450" Width="800">
-    <Grid>
-        <TextBlock Text="{Binding Schedule.Title}"></TextBlock>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding Schedule.Title}" FontSize="18" FontWeight="Bold" Margin="0,0,0,10" />
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox Width="150" Text="{Binding NewGroupTitle, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Width="100" Margin="10,0,0,0" Text="{Binding NewGroupColor, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Add Group" Command="{Binding AddGroupCommand}" Margin="10,0,0,0" />
+        </StackPanel>
+        <ListBox Grid.Row="2" ItemsSource="{Binding Groups}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" Width="200" VerticalAlignment="Center" />
+                        <TextBlock Text="{Binding Color}" Width="200" VerticalAlignment="Center" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

@@ -11,20 +11,17 @@ namespace TimeTracker.UI.ViewModels;
 public class MainWindowViewModel : INotifyPropertyChanged
 {
     private readonly AppDbContext _context;
+    public event PropertyChangedEventHandler? PropertyChanged;
+    private readonly Func<ScheduleTemplate, ScheduleEditorViewModel> _editorFactory;
+    public ICommand AddScheduleCommand { get; }
+    public ICommand OpenEditorCommand { get; }
     public ObservableCollection<ScheduleTemplate> Schedules { get; set; } = new();
     private string _newScheduleTitle = string.Empty;
-    public ICommand AddScheduleCommand { get; }
-    private readonly Func<ScheduleTemplate, ScheduleEditorViewModel> _editorFactory;
-    public ICommand OpenEditorCommand { get; }
-
     public string NewScheduleTitle
     {
         get => _newScheduleTitle;
         set => SetField(ref _newScheduleTitle, value);
     }
-
-    public event PropertyChangedEventHandler? PropertyChanged;
-    
     public MainWindowViewModel(AppDbContext context, Func<ScheduleTemplate, ScheduleEditorViewModel> editorFactory)
     {
         _context = context;
