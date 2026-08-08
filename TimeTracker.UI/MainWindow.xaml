@@ -19,6 +19,10 @@
                         <Button Content="Edit"
                                 Command="{Binding DataContext.OpenEditorCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                 CommandParameter="{Binding}" />
+                        <Button Content="Start Session"
+                                Command="{Binding DataContext.StartSessionCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                CommandParameter="{Binding}"
+                                Margin="10,0,0,0" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

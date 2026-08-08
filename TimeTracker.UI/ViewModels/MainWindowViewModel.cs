@@ -2,8 +2,10 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Microsoft.EntityFrameworkCore;
 using TimeTracker.Data;
 using TimeTracker.Domain.Entities;
+using TimeTracker.Domain.Enums;
 using TimeTracker.UI.Commands;
 
 namespace TimeTracker.UI.ViewModels;
@@ -15,6 +17,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
     private readonly Func<ScheduleTemplate, ScheduleEditorViewModel> _editorFactory;
     public ICommand AddScheduleCommand { get; }
     public ICommand OpenEditorCommand { get; }
+    public ICommand StartSessionCommand { get; }
     public ObservableCollection<ScheduleTemplate> Schedules { get; set; } = new();
     private string _newScheduleTitle = string.Empty;
     public string NewScheduleTitle
@@ -29,6 +32,7 @@ public class MainWindowViewModel : INotifyPropertyChanged
         Schedules = new ObservableCollection<ScheduleTemplate>(_context.ScheduleTemplates.ToList());
         AddScheduleCommand = new RelayCommand(AddSchedule);
         OpenEditorCommand = new RelayCommand<ScheduleTemplate>(OpenEditor);
+        StartSessionCommand = new RelayCommand<ScheduleTemplate>(StartSession);
     }
     private void AddSchedule()
     {
@@ -46,6 +50,41 @@ public class MainWindowViewModel : INotifyPropertyChanged
         var editorViewModel = _editorFactory(schedule);
         var editorWindow = new ScheduleEditorWindow { DataContext = editorViewModel };
         editorWindow.ShowDialog();
+    }
+
+    private void StartSession(ScheduleTemplate? schedule)
+    {
+        if (schedule is null) return;
+        var session = new Session
+        {
+            Schedule = schedule,
+            Title = schedule.Title,
+            Date = DateOnly.FromDateTime(DateTime.Now),
+            StartTime = TimeOnly.FromDateTime(DateTime.Now),
+            EndTime = new TimeOnly(23, 59),
+            Status = SessionStatus.Started
+        };
+        _context.Sessions.Add(session);
+        List<TasksInSchedule> tasksInSchedule =
+            _context.TasksInSchedules
+                .Include(ts => ts.Task)
+                .Where(ts => ts.ScheduleId == schedule.Id)
+                .ToList();
+        List<TasksInSession> tasksInSession = new List<TasksInSession>();
+        foreach (var task in tasksInSchedule)
+        {
+            tasksInSession.Add(new TasksInSession
+            {
+                Task = task.Task,
+                Session = session,
+                StartTime = task.StartTime,
+                EndTime = task.EndTime,
+                Order = task.Order,
+                Status = TaskRunStatus.Planned
+            });
+        }
+        _context.TasksInSessions.AddRange(tasksInSession);
+        _context.SaveChanges();
     }
 
     protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
